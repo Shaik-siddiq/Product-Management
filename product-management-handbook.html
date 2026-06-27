@@ -1,0 +1,983 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Product Management Knowledge Base</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    font-size: 15px;
+    line-height: 1.7;
+    background: #ffffff;
+    color: #1a1a2e;
+  }
+
+  /* Sidebar TOC */
+  .sidebar {
+    position: fixed;
+    left: 0; top: 0; bottom: 0;
+    width: 260px;
+    background: #1a1a2e;
+    overflow-y: auto;
+    padding: 20px 0;
+    z-index: 100;
+  }
+  .sidebar-title {
+    color: #e2b96f;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 0 20px 16px;
+    border-bottom: 1px solid #2d2d50;
+  }
+  .sidebar a {
+    display: block;
+    color: #a8b2d8;
+    text-decoration: none;
+    font-size: 13px;
+    padding: 7px 20px;
+    border-left: 3px solid transparent;
+    transition: all 0.2s;
+  }
+  .sidebar a:hover {
+    color: #e2b96f;
+    border-left-color: #e2b96f;
+    background: rgba(226,185,111,0.07);
+  }
+
+  /* Main content */
+  .main {
+    margin-left: 260px;
+    padding: 0 48px 60px;
+    max-width: 980px;
+  }
+
+  /* Hero */
+  .hero {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 60%, #0f3460 100%);
+    color: white;
+    padding: 52px 48px 44px;
+    margin-left: 260px;
+    margin-bottom: 40px;
+  }
+  .hero h1 {
+    font-size: 30px;
+    font-weight: 700;
+    color: #e2b96f;
+    margin-bottom: 8px;
+    letter-spacing: 0.5px;
+  }
+  .hero p {
+    color: #a8b2d8;
+    font-size: 15px;
+  }
+
+  /* Section */
+  .section {
+    margin-bottom: 48px;
+    border-radius: 10px;
+    border: 1px solid #e8eaf0;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+  }
+  .section-header {
+    padding: 18px 28px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .section-num {
+    background: rgba(255,255,255,0.25);
+    color: white;
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .section-header h2 {
+    font-size: 18px;
+    font-weight: 700;
+    color: white;
+    margin: 0;
+  }
+
+  /* Color themes per section */
+  .theme-blue   .section-header { background: #1a5276; }
+  .theme-teal   .section-header { background: #0e6655; }
+  .theme-purple .section-header { background: #6c3483; }
+  .theme-orange .section-header { background: #a04000; }
+  .theme-navy   .section-header { background: #154360; }
+  .theme-green  .section-header { background: #1e8449; }
+  .theme-red    .section-header { background: #922b21; }
+  .theme-indigo .section-header { background: #283593; }
+  .theme-brown  .section-header { background: #5d4037; }
+  .theme-cyan   .section-header { background: #00695c; }
+  .theme-dark   .section-header { background: #212121; }
+  .theme-wine   .section-header { background: #880e4f; }
+
+  .section-body { padding: 28px 28px; }
+
+  /* Question style */
+  .question {
+    background: #f0f4ff;
+    border-left: 4px solid #3f51b5;
+    border-radius: 0 6px 6px 0;
+    padding: 12px 18px;
+    margin-bottom: 20px;
+    font-size: 15px;
+    font-weight: 600;
+    color: #1a237e;
+  }
+
+  /* Sub headings */
+  h3 {
+    font-size: 15px;
+    font-weight: 700;
+    color: #1a1a2e;
+    margin: 22px 0 10px;
+    padding-bottom: 4px;
+    border-bottom: 2px solid #e8eaf0;
+  }
+  h4 {
+    font-size: 14px;
+    font-weight: 700;
+    color: #3f51b5;
+    margin: 16px 0 8px;
+  }
+  p { margin-bottom: 12px; color: #2c2c54; }
+
+  /* Lists */
+  ul, ol {
+    margin: 8px 0 14px 20px;
+    color: #2c2c54;
+  }
+  li { margin-bottom: 5px; }
+
+  /* Formula box */
+  .formula {
+    background: #e8f4fd;
+    border: 1px solid #aed6f1;
+    border-radius: 8px;
+    padding: 14px 20px;
+    font-family: 'Courier New', monospace;
+    font-size: 14px;
+    color: #1a5276;
+    margin: 14px 0;
+    white-space: pre-wrap;
+  }
+
+  /* Interview answer box */
+  .interview-box {
+    background: #fef9e7;
+    border: 1px solid #f9e79f;
+    border-left: 4px solid #e2b96f;
+    border-radius: 0 8px 8px 0;
+    padding: 16px 20px;
+    margin: 16px 0;
+  }
+  .interview-box .label {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #b7770d;
+    margin-bottom: 8px;
+  }
+  .interview-box p { color: #5d4037; margin-bottom: 0; }
+
+  /* Table */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 14px 0;
+    font-size: 14px;
+  }
+  th {
+    background: #1a1a2e;
+    color: #e2b96f;
+    padding: 10px 14px;
+    text-align: left;
+    font-size: 13px;
+    font-weight: 600;
+  }
+  td {
+    padding: 9px 14px;
+    border-bottom: 1px solid #e8eaf0;
+    color: #2c2c54;
+  }
+  tr:nth-child(even) td { background: #f8f9ff; }
+  tr:hover td { background: #eef0fb; }
+
+  /* Tip box */
+  .tip {
+    background: #eafaf1;
+    border-left: 4px solid #27ae60;
+    border-radius: 0 8px 8px 0;
+    padding: 12px 18px;
+    margin: 14px 0;
+    font-size: 14px;
+    color: #1e8449;
+  }
+
+  /* Stage cards */
+  .stages {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 14px;
+    margin: 16px 0;
+  }
+  .stage-card {
+    border-radius: 8px;
+    padding: 14px 16px;
+    border: 1px solid #e0e0e0;
+  }
+  .stage-card .stage-num {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 6px;
+  }
+  .stage-card h5 { font-size: 14px; margin-bottom: 6px; }
+  .stage-card p { font-size: 13px; margin: 0; }
+
+  /* Color variants for stage cards */
+  .card-blue   { background: #eaf1fb; border-color: #aed6f1; }
+  .card-blue   .stage-num { color: #1a5276; }
+  .card-green  { background: #eafaf1; border-color: #a9dfbf; }
+  .card-green  .stage-num { color: #1e8449; }
+  .card-yellow { background: #fef9e7; border-color: #f9e79f; }
+  .card-yellow .stage-num { color: #b7770d; }
+  .card-orange { background: #fdf2e9; border-color: #f5cba7; }
+  .card-orange .stage-num { color: #a04000; }
+  .card-red    { background: #fdedec; border-color: #f5b7b1; }
+  .card-red    .stage-num { color: #922b21; }
+
+  /* Framework box */
+  .framework {
+    background: #1a1a2e;
+    color: #e2b96f;
+    border-radius: 8px;
+    padding: 18px 22px;
+    font-family: 'Courier New', monospace;
+    font-size: 13px;
+    margin: 16px 0;
+    white-space: pre-wrap;
+    line-height: 1.8;
+  }
+
+  /* Tag chips */
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0; }
+  .chip {
+    background: #e8eaf6;
+    color: #3f51b5;
+    border-radius: 20px;
+    padding: 4px 12px;
+    font-size: 12px;
+    font-weight: 600;
+  }
+
+  /* Scrollbar */
+  .sidebar::-webkit-scrollbar { width: 4px; }
+  .sidebar::-webkit-scrollbar-thumb { background: #3f51b5; border-radius: 2px; }
+
+  @media (max-width: 768px) {
+    .sidebar { display: none; }
+    .main, .hero { margin-left: 0; padding-left: 20px; padding-right: 20px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Sidebar -->
+<nav class="sidebar">
+  <div class="sidebar-title">PM Knowledge Base</div>
+  <a href="#s1">1. Product Lifecycle (PLC)</a>
+  <a href="#s2">2. Value in PM</a>
+  <a href="#s3">3. Value Management</a>
+  <a href="#s4">4. Who is the Customer?</a>
+  <a href="#s5">5. Value Creation</a>
+  <a href="#s6">6. Value Capture</a>
+  <a href="#s7">7. Communicating Value</a>
+  <a href="#s8">8. Delivering Value</a>
+  <a href="#s9">9. Customer Awareness & AIDA</a>
+  <a href="#s10">10. Adaptive Productizing</a>
+  <a href="#s11">11. Market Analysis</a>
+  <a href="#s12">12. MVP</a>
+  <a href="#s13">13. A/B Testing</a>
+  <a href="#s14">14. North Star & Metrics</a>
+  <a href="#s15">15. Product vs Service</a>
+  <a href="#s16">16. PM Roles Compared</a>
+  <a href="#s17">17. PM Tools</a>
+  <a href="#s18">18. Technical Concepts</a>
+  <a href="#s19">19. PRD Structure</a>
+  <a href="#s20">20. Ideation</a>
+  <a href="#s21">21. Market Research Obsession</a>
+  <a href="#s22">22. Dealing with Failure</a>
+  <a href="#s23">23. Developer Selection</a>
+  <a href="#s24">24. Product Assets</a>
+  <a href="#s25">25. Key PM Terms</a>
+</nav>
+
+<!-- Hero -->
+<div class="hero">
+  <h1>📘 Product Management Knowledge Base</h1>
+  <p>A complete reference guide covering core PM concepts, frameworks, metrics, tools, and interview answers.</p>
+</div>
+
+<!-- Main -->
+<div class="main">
+
+<!-- 1. Product Lifecycle -->
+<div class="section theme-blue" id="s1">
+  <div class="section-header"><div class="section-num">1</div><h2>Product Lifecycle (PLC)</h2></div>
+  <div class="section-body">
+    <div class="question">What is a Product Lifecycle?</div>
+    <p>A Product Lifecycle is the journey of a product from its launch to its eventual decline or retirement.</p>
+    <div class="formula">Idea → Launch → Growth → Maturity → Decline</div>
+    <div class="stages">
+      <div class="stage-card card-blue"><div class="stage-num">Stage 1</div><h5>Development</h5><p>Research, prototyping, testing. No revenue yet — only investment.</p></div>
+      <div class="stage-card card-green"><div class="stage-num">Stage 2</div><h5>Introduction</h5><p>Product launched. Low awareness, slow sales, high marketing costs.</p></div>
+      <div class="stage-card card-yellow"><div class="stage-num">Stage 3</div><h5>Growth</h5><p>Sales grow rapidly. Competitors enter. Focus on scaling.</p></div>
+      <div class="stage-card card-orange"><div class="stage-num">Stage 4</div><h5>Maturity</h5><p>Growth slows, market saturated. Revenue at peak. Intense competition.</p></div>
+      <div class="stage-card card-red"><div class="stage-num">Stage 5</div><h5>Decline</h5><p>Demand drops. New tech replaces product. Revamp or sunset.</p></div>
+    </div>
+    <h3>PM Focus at Each Stage</h3>
+    <table>
+      <tr><th>Stage</th><th>PM Focus</th><th>Key Metric</th></tr>
+      <tr><td>Introduction</td><td>Product-market fit, user feedback</td><td>Acquisition, Activation</td></tr>
+      <tr><td>Growth</td><td>Scaling, feature improvement, retention</td><td>Retention, Engagement</td></tr>
+      <tr><td>Maturity</td><td>Optimization, differentiation, loyalty</td><td>Revenue, Profitability</td></tr>
+      <tr><td>Decline</td><td>Revamp or sunset decision</td><td>Cost Optimization</td></tr>
+    </table>
+    <div class="interview-box"><div class="label">🎤 30-Second Interview Answer</div><p>"The Product Lifecycle describes the stages a product goes through from development to retirement: Development, Introduction, Growth, Maturity, and Decline. Each stage requires different PM strategies — early stages focus on product-market fit and adoption; maturity focuses on optimization and retention; decline involves deciding whether to reinvent or sunset the product."</p></div>
+  </div>
+</div>
+
+<!-- 2. Value in PM -->
+<div class="section theme-teal" id="s2">
+  <div class="section-header"><div class="section-num">2</div><h2>Value in Product Management</h2></div>
+  <div class="section-body">
+    <div class="question">What is value, why is it important, and how is it calculated?</div>
+    <div class="formula">Value = Benefits Received − Costs Incurred</div>
+    <p>A PM's job is to create value for customers, the business, and stakeholders — not just to build features.</p>
+    <h3>Who Receives Value?</h3>
+    <table>
+      <tr><th>Type</th><th>Benefits</th><th>Example</th></tr>
+      <tr><td>Customer Value</td><td>Saves time, money, effort</td><td>Food delivery saves travel</td></tr>
+      <tr><td>Business Value</td><td>Revenue, market share, retention</td><td>Subscriptions increase recurring revenue</td></tr>
+      <tr><td>Stakeholder Value</td><td>Brand reputation, compliance</td><td>Investor confidence grows</td></tr>
+      <tr><td>Technical Value</td><td>Reduced debt, better scalability</td><td>Modern architecture = faster deploys</td></tr>
+    </table>
+    <h3>How to Calculate Value</h3>
+    <h4>Method 1 — Cost-Benefit Analysis</h4>
+    <div class="formula">Value = Benefits − Costs
+Example: Revenue ₹10L − Dev Cost ₹3L = ₹7L value</div>
+    <h4>Method 2 — ROI</h4>
+    <div class="formula">ROI = (Benefit − Cost) / Cost × 100
+Example: (₹50L − ₹10L) / ₹10L × 100 = 400%</div>
+    <h4>Method 3 — RICE Framework</h4>
+    <div class="formula">RICE = (Reach × Impact × Confidence) / Effort</div>
+    <h4>Method 4 — Opportunity Scoring</h4>
+    <div class="formula">Value = Importance − Satisfaction
+If Importance = 9/10 and Satisfaction = 3/10 → Opportunity = 6</div>
+    <div class="interview-box"><div class="label">🎤 Interview Answer</div><p>"Value in PM is the measurable benefit delivered to customers, the business, and stakeholders. PMs define value by understanding customer pain points, business objectives, and strategic goals. Value can be measured through Cost-Benefit Analysis, ROI, RICE scoring, and outcome metrics like retention and satisfaction."</p></div>
+  </div>
+</div>
+
+<!-- 3. Value Management -->
+<div class="section theme-purple" id="s3">
+  <div class="section-header"><div class="section-num">3</div><h2>Value Management</h2></div>
+  <div class="section-body">
+    <div class="question">What is Value Management?</div>
+    <p>Value Management is the process of identifying, measuring, prioritizing, delivering, and continuously improving the value created by a product or investment.</p>
+    <div class="framework">Value Management Process:
+1. Identify Value  → Understand customer pain points & business goals
+2. Measure Value   → Define success metrics (revenue, retention, CSAT)
+3. Prioritize Value → Use RICE, ROI, MoSCoW, Cost-Benefit
+4. Deliver Value   → Build MVP, iterate
+5. Track Value     → Verify value was delivered post-launch
+6. Optimize Value  → Continuously improve based on data</div>
+    <h3>PM's 5 Key Questions</h3>
+    <ol>
+      <li>What value are we creating?</li>
+      <li>For whom are we creating it?</li>
+      <li>How will we measure it?</li>
+      <li>Is the value worth the investment?</li>
+      <li>Did we actually deliver the expected value?</li>
+    </ol>
+    <div class="tip">💡 A value-focused PM separates themselves from a feature-focused PM. Always ask "Should we build this?" not just "Can we build this?"</div>
+    <div class="interview-box"><div class="label">🎤 Interview Answer</div><p>"Value Management is the practice of maximizing the value delivered to customers, the business, and stakeholders while optimizing resources like time, budget, and engineering effort. It involves identifying value opportunities, prioritizing them, measuring outcomes, and continuously improving based on data."</p></div>
+  </div>
+</div>
+
+<!-- 4. Who is the Customer -->
+<div class="section theme-orange" id="s4">
+  <div class="section-header"><div class="section-num">4</div><h2>Understanding the Customer</h2></div>
+  <div class="section-body">
+    <div class="question">Who is the customer? What problem do they have? What do they want? How can you solve it?</div>
+    <p>These are the four fundamental questions every PM must continuously ask.</p>
+    <h3>1. Who is the Customer?</h3>
+    <p>Understand: demographics, behaviors, goals, motivations, pain points, and buying power. Use user interviews, surveys, support tickets, analytics, and personas.</p>
+    <h3>2. What is the Underlying Problem?</h3>
+    <p>Customers describe symptoms, not root causes. Use the <strong>5 Whys</strong> method.</p>
+    <div class="formula">Customer says: "Food delivery takes too long."
+Why? → Riders delayed → Why? → Routes inefficient
+→ Why? → No traffic data → Root: Poor route optimization</div>
+    <h3>3. What Does the Customer Want?</h3>
+    <table>
+      <tr><th>Customer Says</th><th>Customer Actually Wants</th></tr>
+      <tr><td>Faster horse</td><td>Faster transportation</td></tr>
+      <tr><td>Dark mode</td><td>Comfortable night viewing</td></tr>
+      <tr><td>More reports</td><td>Better decision-making</td></tr>
+      <tr><td>More notifications</td><td>Only the important updates</td></tr>
+    </table>
+    <h3>4. How Can We Solve It?</h3>
+    <p>Generate options → Evaluate (customer value, business value, effort, risk) → Build MVP → Measure → Iterate.</p>
+    <div class="framework">PM Thinking Framework:
+Customer → Problem → Need → Solution → MVP → Metrics → Learn & Improve</div>
+  </div>
+</div>
+
+<!-- 5. Value Creation -->
+<div class="section theme-navy" id="s5">
+  <div class="section-header"><div class="section-num">5</div><h2>Creating Value</h2></div>
+  <div class="section-body">
+    <div class="question">How does a PM create value through features, right people, right market, personas, and tools?</div>
+    <div class="formula">Value = Right Customer + Right Problem + Right Solution + Right Timing</div>
+    <h3>Key Elements of Value Creation</h3>
+    <table>
+      <tr><th>Element</th><th>Key Question</th><th>Tools</th></tr>
+      <tr><td>Right Customer</td><td>Who are they and what do they want?</td><td>User interviews, Surveys</td></tr>
+      <tr><td>Right Market</td><td>Is the market growing and willing to pay?</td><td>Market research, TAM/SAM/SOM</td></tr>
+      <tr><td>Persona</td><td>Who exactly is our target user?</td><td>Figma, Miro, FigJam</td></tr>
+      <tr><td>Right Problem</td><td>Is it frequent, painful, real?</td><td>Analytics, Support tickets</td></tr>
+      <tr><td>Right Features</td><td>Do features solve the problem?</td><td>RICE, MoSCoW, Kano</td></tr>
+    </table>
+    <h3>PM Value Creation Framework</h3>
+    <div class="framework">WHO?   → Who is the customer?
+WHY?   → Why does the problem exist?
+WHAT?  → What outcome does the customer want?
+HOW?   → How can we solve it?
+VALUE? → What value will be created?
+METRIC?→ How will we measure success?</div>
+  </div>
+</div>
+
+<!-- 6. Value Capture -->
+<div class="section theme-green" id="s6">
+  <div class="section-header"><div class="section-num">6</div><h2>Capturing Value</h2></div>
+  <div class="section-body">
+    <div class="question">Who will pay? How much? What is the market value? Is the problem solved?</div>
+    <p>Value Capture is converting customer value into revenue, profit, or business growth.</p>
+    <h3>Key Questions for Value Capture</h3>
+    <table>
+      <tr><th>Question</th><th>Insight</th></tr>
+      <tr><td>Who will pay?</td><td>User ≠ Payer (e.g. Slack: employees use, company pays)</td></tr>
+      <tr><td>How much will they pay?</td><td>Depends on problem severity, frequency, ROI delivered</td></tr>
+      <tr><td>What pricing strategy?</td><td>Cost-based, Competitor-based, or Value-based (best for SaaS)</td></tr>
+      <tr><td>Is problem solved?</td><td>Track before/after metrics: checkout time, conversion, engagement</td></tr>
+      <tr><td>What is market value?</td><td>TAM × SAM × SOM analysis</td></tr>
+    </table>
+    <h3>Market Size Formula</h3>
+    <div class="formula">Market Value = Number of Customers × Average Revenue Per Customer
+Example: 1,000,000 customers × ₹2,000/year = ₹200 Crore opportunity</div>
+    <div class="framework">Full PM Value Loop:
+Customer → Problem → Need → Solution
+→ Value Creation → Value Capture → Revenue → Growth → Business Success</div>
+  </div>
+</div>
+
+<!-- 7. Communicating Value -->
+<div class="section theme-red" id="s7">
+  <div class="section-header"><div class="section-num">7</div><h2>Communicating Value</h2></div>
+  <div class="section-body">
+    <div class="question">What is communicating value, and how does a PM do it?</div>
+    <p>Even a great product fails if customers don't understand why they should use it.</p>
+    <div class="formula">Value Creation → Value Capture → Value Communication</div>
+    <h3>Communication Framework</h3>
+    <table>
+      <tr><th>Step</th><th>Question</th><th>Example</th></tr>
+      <tr><td>Know the audience</td><td>Who are we speaking to?</td><td>Students vs. Enterprise buyers need different messaging</td></tr>
+      <tr><td>Start with the pain</td><td>What problem are they facing?</td><td>"Spend less time searching" not "Our app has AI"</td></tr>
+      <tr><td>Show the value</td><td>What benefit do they get?</td><td>Concrete outcomes, not features</td></tr>
+      <tr><td>Prove it</td><td>Can you back it up?</td><td>Case studies, testimonials, ROI calculators</td></tr>
+    </table>
+    <h3>Key Communication Assets</h3>
+    <div class="chips">
+      <span class="chip">Product Datasheet</span><span class="chip">White Paper</span>
+      <span class="chip">Solution Brief</span><span class="chip">Demo</span>
+      <span class="chip">Case Studies</span><span class="chip">Testimonials</span>
+      <span class="chip">Sales Deck</span><span class="chip">ROI Calculator</span>
+      <span class="chip">FAQ</span><span class="chip">Battle Cards</span>
+    </div>
+  </div>
+</div>
+
+<!-- 8. Delivering Value -->
+<div class="section theme-indigo" id="s8">
+  <div class="section-header"><div class="section-num">8</div><h2>Delivering Value</h2></div>
+  <div class="section-body">
+    <div class="question">What is delivering value, and what delivery channels and infrastructure do you use?</div>
+    <p>Delivering value ensures customers can successfully access, use, and benefit from your product.</p>
+    <div class="formula">Create → Communicate → Capture → Deliver → Measure → Improve</div>
+    <h3>Delivery Channels</h3>
+    <table>
+      <tr><th>Channel</th><th>Example</th></tr>
+      <tr><td>Website</td><td>SaaS apps, e-commerce</td></tr>
+      <tr><td>Mobile App</td><td>Android, iOS apps</td></tr>
+      <tr><td>APIs</td><td>Payment gateways, developer platforms</td></tr>
+      <tr><td>Marketplaces</td><td>App stores, plugin stores</td></tr>
+      <tr><td>Direct Sales / CS Teams</td><td>Enterprise onboarding</td></tr>
+    </table>
+    <h3>Delivery Infrastructure</h3>
+    <table>
+      <tr><th>Layer</th><th>Components</th></tr>
+      <tr><td>Technical</td><td>Cloud hosting, databases, APIs, CDN, load balancers, CI/CD</td></tr>
+      <tr><td>Operational</td><td>Support team, customer success, documentation, training</td></tr>
+      <tr><td>Business</td><td>Payment systems, CRM, billing, compliance, analytics</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- 9. AIDA / Customer Journey -->
+<div class="section theme-brown" id="s9">
+  <div class="section-header"><div class="section-num">9</div><h2>Customer Awareness, Interest & Decision (AIDA)</h2></div>
+  <div class="section-body">
+    <div class="question">How does a PM get customers from unaware to loyal users in the shortest time?</div>
+    <div class="framework">Awareness → Interest → Consideration → Decision
+→ Action → Activation → Retention → Referral → Loyalty</div>
+    <h3>Each Stage Explained</h3>
+    <table>
+      <tr><th>Stage</th><th>PM Goal</th><th>Channels/Tools</th><th>Key Metrics</th></tr>
+      <tr><td>Awareness</td><td>Make right customers aware</td><td>SEO, Social, Ads, PR</td><td>Reach, Traffic, CPC</td></tr>
+      <tr><td>Interest</td><td>Show why they should care</td><td>Landing pages, demos, videos</td><td>CTR, Time on site</td></tr>
+      <tr><td>Consideration</td><td>Differentiate from competitors</td><td>Comparison pages, free trial, ROI calc</td><td>Trial signups, SQLs</td></tr>
+      <tr><td>Decision</td><td>Remove friction to buy</td><td>Simpler checkout, support</td><td>Conversion rate</td></tr>
+      <tr><td>Activation</td><td>Deliver "aha!" moment fast</td><td>Onboarding, tutorials, walkthroughs</td><td>Time to First Value</td></tr>
+      <tr><td>Retention</td><td>Keep users coming back</td><td>Reliability, new features, support</td><td>DAU/MAU, Churn</td></tr>
+      <tr><td>Referral</td><td>Turn users into marketers</td><td>Referral programs, NPS surveys</td><td>NPS, Viral Coefficient</td></tr>
+    </table>
+    <div class="tip">💡 Reduce the time from "first hearing about the product" to "first meaningful value" — this is the #1 lever for growth.</div>
+  </div>
+</div>
+
+<!-- 10. Adaptive Productizing -->
+<div class="section theme-cyan" id="s10">
+  <div class="section-header"><div class="section-num">10</div><h2>Adaptive Productizing Process</h2></div>
+  <div class="section-body">
+    <div class="question">What is the adaptive productizing process?</div>
+    <p>Converting an idea, service, or custom solution into a scalable, repeatable product — while continuously adapting based on customer feedback, market changes, and business goals.</p>
+    <div class="framework">Market Research → Customer Discovery → Problem Validation
+→ Idea Generation → Prioritization → Prototype → Customer Feedback
+→ MVP → Launch → Measure KPIs → Learn → Improve → Scale → (Repeat)</div>
+    <h3>Stage-by-Stage PM Questions</h3>
+    <table>
+      <tr><th>Stage</th><th>Key Question</th></tr>
+      <tr><td>Discover</td><td>Who are the customers?</td></tr>
+      <tr><td>Validate</td><td>Is this problem worth solving?</td></tr>
+      <tr><td>Prioritize</td><td>What creates the most value?</td></tr>
+      <tr><td>Build</td><td>What's the smallest solution that works?</td></tr>
+      <tr><td>Launch</td><td>How do we get it into customers' hands?</td></tr>
+      <tr><td>Measure</td><td>Did it achieve the desired outcome?</td></tr>
+      <tr><td>Learn</td><td>What did customers teach us?</td></tr>
+      <tr><td>Adapt</td><td>What should we change next?</td></tr>
+      <tr><td>Scale</td><td>How do we grow without losing quality?</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- 11. Market Analysis -->
+<div class="section theme-dark" id="s11">
+  <div class="section-header"><div class="section-num">11</div><h2>Market Analysis</h2></div>
+  <div class="section-body">
+    <div class="question">What is market analysis, and how do we analyze for market enhancement?</div>
+    <p>Market analysis is studying the market, customers, competitors, trends, and environment to determine whether there's a real opportunity.</p>
+    <h3>Market Analysis Framework</h3>
+    <table>
+      <tr><th>Component</th><th>Focus</th><th>Tools</th></tr>
+      <tr><td>Customer Analysis</td><td>Who they are, what they need, how they buy</td><td>Interviews, surveys, personas</td></tr>
+      <tr><td>Market Size (TAM/SAM/SOM)</td><td>How big is the opportunity?</td><td>Market research reports</td></tr>
+      <tr><td>Competitor Analysis</td><td>Features, pricing, UX, gaps</td><td>G2, Capterra, product teardowns</td></tr>
+      <tr><td>Industry Trends</td><td>AI, mobile, regulations, behavior shifts</td><td>Industry reports, news</td></tr>
+      <tr><td>Market Gap Analysis</td><td>Unmet needs and opportunities</td><td>Customer interviews</td></tr>
+    </table>
+    <h3>Market Enhancement Strategies</h3>
+    <ol>
+      <li><strong>Increase Customer Value</strong> — Solve more problems, improve UX, improve reliability</li>
+      <li><strong>Reach More Customers</strong> — New segments, new geographies, new channels</li>
+      <li><strong>Improve Pricing</strong> — Align price with value delivered</li>
+      <li><strong>Strengthen Competitive Position</strong> — Better experience, integrations, support</li>
+      <li><strong>Increase Retention</strong> — Improve onboarding, customer success, feature adoption</li>
+    </ol>
+  </div>
+</div>
+
+<!-- 12. MVP -->
+<div class="section theme-wine" id="s12">
+  <div class="section-header"><div class="section-num">12</div><h2>Minimum Viable Product (MVP)</h2></div>
+  <div class="section-body">
+    <div class="question">What is an MVP?</div>
+    <div class="formula">MVP = Minimum Features + Maximum Learning</div>
+    <p>The simplest version of a product that delivers core value and validates assumptions with real users.</p>
+    <h3>MVP vs Prototype vs POC</h3>
+    <table>
+      <tr><th>Type</th><th>Purpose</th></tr>
+      <tr><td>POC (Proof of Concept)</td><td>Checks if something is technically feasible</td></tr>
+      <tr><td>Prototype</td><td>Demonstrates design and user flow (Figma)</td></tr>
+      <tr><td>MVP</td><td>Real product released to users to validate assumptions</td></tr>
+    </table>
+    <h3>How PMs Build an MVP</h3>
+    <ol>
+      <li>Identify the core user problem</li>
+      <li>Define the minimum core value to deliver</li>
+      <li>List all possible features</li>
+      <li>Ruthlessly cut to must-haves only</li>
+      <li>Launch and measure (adoption, retention, conversion)</li>
+    </ol>
+    <div class="framework">Golden Rule: Build → Measure → Learn → Iterate</div>
+    <div class="interview-box"><div class="label">🎤 Interview Answer</div><p>"An MVP is the simplest version of a product that delivers core value to users while enabling teams to validate assumptions and gather feedback with minimal investment. The objective is to learn quickly, iterate based on data, and avoid building features that users may not need."</p></div>
+  </div>
+</div>
+
+<!-- 13. A/B Testing -->
+<div class="section theme-blue" id="s13">
+  <div class="section-header"><div class="section-num">13</div><h2>A/B Testing</h2></div>
+  <div class="section-body">
+    <div class="question">What is A/B Testing?</div>
+    <div class="formula">A/B Testing = Compare → Measure → Decide</div>
+    <p>An experiment where two versions of a feature are shown to different user groups and measured to see which performs better.</p>
+    <h3>A/B Testing Process</h3>
+    <ol>
+      <li>Define a hypothesis ("Moving mic button to center will increase voice adoption")</li>
+      <li>Choose success metrics (conversion rate, CTR, retention)</li>
+      <li>Split users randomly (50/50 or other split)</li>
+      <li>Run the experiment long enough for statistical significance</li>
+      <li>Analyze results and roll out the winner</li>
+    </ol>
+    <h3>When to Use A/B Testing</h3>
+    <table>
+      <tr><th>✅ Use For</th><th>❌ Avoid When</th></tr>
+      <tr><td>UI changes, pricing, onboarding flows</td><td>User base too small</td></tr>
+      <tr><td>New features, notifications</td><td>Changes impact security/compliance</td></tr>
+      <tr><td>Recommendation algorithms</td><td>Experiment could harm users</td></tr>
+    </table>
+    <div class="interview-box"><div class="label">🎤 Interview Answer</div><p>"A/B testing is an experimentation method where users are randomly split and exposed to different versions of a feature. The goal is to compare predefined metrics and make data-driven decisions based on statistically significant results."</p></div>
+  </div>
+</div>
+
+<!-- 14. Metrics -->
+<div class="section theme-teal" id="s14">
+  <div class="section-header"><div class="section-num">14</div><h2>North Star Metric, Input, Guardrail & Vanity Metrics</h2></div>
+  <div class="section-body">
+    <div class="question">What are North Star, Input, Guardrail, and Vanity Metrics?</div>
+    <table>
+      <tr><th>Metric Type</th><th>Definition</th><th>Example</th></tr>
+      <tr><td><strong>North Star</strong></td><td>Single metric that best reflects core product value</td><td>Netflix: Watch time | Uber: Completed rides</td></tr>
+      <tr><td><strong>Input Metrics</strong></td><td>Metrics that drive the North Star</td><td>Uber: Driver availability, Payment success rate</td></tr>
+      <tr><td><strong>Guardrail Metrics</strong></td><td>Metrics that must NOT worsen during optimization</td><td>Churn rate, CSAT, Crash rate</td></tr>
+      <tr><td><strong>Vanity Metrics</strong></td><td>Look impressive but don't indicate real value</td><td>Total downloads, Social media likes</td></tr>
+    </table>
+    <h3>Interview Framework — When Asked About Metrics</h3>
+    <ol>
+      <li>Define the North Star Metric (what value does the product create?)</li>
+      <li>Define Input Metrics (what actions drive that value?)</li>
+      <li>Define Guardrail Metrics (what must not degrade?)</li>
+      <li>Identify Vanity Metrics (what looks good but doesn't reflect real success?)</li>
+    </ol>
+    <h3>Example: Food Delivery App</h3>
+    <table>
+      <tr><th>Type</th><th>Metric</th></tr>
+      <tr><td>North Star</td><td>Orders Delivered</td></tr>
+      <tr><td>Input</td><td>Active Users, Restaurant Availability, Checkout Conversion, Payment Success</td></tr>
+      <tr><td>Guardrail</td><td>Delivery Time, Customer Ratings, Refund Rate</td></tr>
+      <tr><td>Vanity</td><td>App Downloads, Social Followers, Website Visits</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- 15. Product vs Service -->
+<div class="section theme-purple" id="s15">
+  <div class="section-header"><div class="section-num">15</div><h2>Product vs Service</h2></div>
+  <div class="section-body">
+    <div class="question">What is the difference between a product and a service?</div>
+    <table>
+      <tr><th></th><th>Product</th><th>Service</th></tr>
+      <tr><td>Nature</td><td>Tangible / digital item</td><td>Action or assistance</td></tr>
+      <tr><td>Ownership</td><td>Ownership transfers to buyer</td><td>No ownership transfer</td></tr>
+      <tr><td>Timing</td><td>Produced before purchase</td><td>Delivered when needed</td></tr>
+      <tr><td>Examples</td><td>Phone, book, laptop</td><td>Teaching, haircut, banking</td></tr>
+    </table>
+    <div class="tip">💡 A mobile phone is a product. Phone repair is a service.</div>
+  </div>
+</div>
+
+<!-- 16. PM Roles Compared -->
+<div class="section theme-orange" id="s16">
+  <div class="section-header"><div class="section-num">16</div><h2>Product Manager vs Project Manager vs Program Manager</h2></div>
+  <div class="section-body">
+    <div class="question">What is the difference between Product Manager, Project Manager, and Program Manager?</div>
+    <table>
+      <tr><th></th><th>Product Manager</th><th>Project Manager</th><th>Program Manager</th></tr>
+      <tr><td>Main Question</td><td>What should we build and why?</td><td>How will we deliver it?</td><td>How do multiple projects work together?</td></tr>
+      <tr><td>Focus</td><td>Product success & customer value</td><td>Execution & delivery</td><td>Strategic coordination</td></tr>
+      <tr><td>Time Horizon</td><td>Long-term</td><td>Short to medium term</td><td>Medium to long term</td></tr>
+      <tr><td>Success Metrics</td><td>User growth, revenue, adoption</td><td>On-time, within budget</td><td>Business outcomes across projects</td></tr>
+      <tr><td>Owns</td><td>Product vision & roadmap</td><td>Project plan & timelines</td><td>Cross-functional initiatives</td></tr>
+    </table>
+    <h3>House Analogy</h3>
+    <ul>
+      <li><strong>Product Manager</strong> — Decides what kind of house people want</li>
+      <li><strong>Project Manager</strong> — Ensures construction finishes on time and budget</li>
+      <li><strong>Program Manager</strong> — Oversees multiple housing projects across different cities</li>
+    </ul>
+  </div>
+</div>
+
+<!-- 17. PM Tools -->
+<div class="section theme-navy" id="s17">
+  <div class="section-header"><div class="section-num">17</div><h2>Tools Every PM (and Technical PM) Should Know</h2></div>
+  <div class="section-body">
+    <div class="question">What tools make your life easier as a PM, and what tools do dev teams use?</div>
+    <h3>PM Tools</h3>
+    <table>
+      <tr><th>Purpose</th><th>Tools</th></tr>
+      <tr><td>Sprint Planning / Backlog</td><td>Jira, Linear</td></tr>
+      <tr><td>Documentation / PRDs</td><td>Confluence, Notion</td></tr>
+      <tr><td>Wireframes / Prototypes</td><td>Figma, Framer</td></tr>
+      <tr><td>Brainstorming</td><td>Miro, FigJam</td></tr>
+      <tr><td>Analytics</td><td>Mixpanel, Amplitude, Google Analytics</td></tr>
+    </table>
+    <h3>Engineering Team Tools (TPM Must Know)</h3>
+    <table>
+      <tr><th>Area</th><th>Tools</th><th>Why It Matters</th></tr>
+      <tr><td>Frontend</td><td>React, Next.js, Angular</td><td>UI rendering, page performance</td></tr>
+      <tr><td>Backend</td><td>Node.js, Spring Boot, Django</td><td>Business logic, APIs</td></tr>
+      <tr><td>Database</td><td>PostgreSQL, MongoDB, Redis</td><td>Data storage, caching</td></tr>
+      <tr><td>Version Control</td><td>Git, GitHub, GitLab</td><td>Code reviews, releases</td></tr>
+      <tr><td>CI/CD</td><td>Jenkins, GitHub Actions, Docker, Kubernetes</td><td>Deployment pipelines</td></tr>
+      <tr><td>Cloud</td><td>AWS, GCP, Azure</td><td>Scalability, hosting</td></tr>
+      <tr><td>Monitoring</td><td>Datadog, Grafana, Prometheus</td><td>Uptime, latency, SLA</td></tr>
+      <tr><td>Security</td><td>OAuth, JWT, SSL/TLS, WAF, IAM</td><td>Auth, encryption, access</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- 18. Technical Concepts -->
+<div class="section theme-green" id="s18">
+  <div class="section-header"><div class="section-num">18</div><h2>Key Technical Concepts for PMs</h2></div>
+  <div class="section-body">
+    <div class="question">What technical concepts should a PM understand?</div>
+    <table>
+      <tr><th>Concept</th><th>What It Is</th></tr>
+      <tr><td>TCP</td><td>Reliable, connection-oriented data transmission protocol</td></tr>
+      <tr><td>DNS</td><td>Translates domain names (google.com) to IP addresses — "internet phonebook"</td></tr>
+      <tr><td>CDN</td><td>Distributed servers that deliver content faster by caching it near users</td></tr>
+      <tr><td>Load Balancer</td><td>Distributes traffic across servers to prevent overload</td></tr>
+      <tr><td>API</td><td>Interface allowing systems to communicate</td></tr>
+      <tr><td>SQL</td><td>Language to create, read, update, delete relational database records</td></tr>
+      <tr><td>SDLC</td><td>Structured process: Requirements → Design → Code → Test → Deploy → Maintain</td></tr>
+      <tr><td>Scrum</td><td>Agile framework: sprints, stand-ups, Product Owner, Scrum Master, retrospectives</td></tr>
+      <tr><td>Microservices</td><td>App built as small independent services that communicate via APIs</td></tr>
+      <tr><td>Feature Flags</td><td>Toggle features on/off without deploying new code</td></tr>
+      <tr><td>A/B Testing</td><td>Experiment comparing two versions to pick the better one</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- 19. PRD Structure -->
+<div class="section theme-red" id="s19">
+  <div class="section-header"><div class="section-num">19</div><h2>PRD — Universal Structure</h2></div>
+  <div class="section-body">
+    <div class="question">What are the universal rules and structure for creating PRDs?</div>
+    <p>A PRD answers: <em>"What problem are we solving, for whom, why now, and how will we measure success?"</em></p>
+    <table>
+      <tr><th>#</th><th>Section</th><th>What to Include</th></tr>
+      <tr><td>1</td><td>Problem Statement</td><td>What, who, severity, why now</td></tr>
+      <tr><td>2</td><td>Background & Context</td><td>Market trends, customer feedback, analytics, competitor insights</td></tr>
+      <tr><td>3</td><td>Goals & Objectives</td><td>SMART goals with success metrics</td></tr>
+      <tr><td>4</td><td>Non-Goals</td><td>Explicitly what is OUT of scope (prevents scope creep)</td></tr>
+      <tr><td>5</td><td>User Personas</td><td>Who uses this, their context and needs</td></tr>
+      <tr><td>6</td><td>User Stories</td><td>"As a [user], I want [feature] so that [benefit]"</td></tr>
+      <tr><td>7</td><td>Functional Requirements</td><td>What the system must do</td></tr>
+      <tr><td>8</td><td>Non-Functional Requirements</td><td>Performance, reliability, security, scalability</td></tr>
+      <tr><td>9</td><td>User Flow</td><td>End-to-end journey (Open → Tap → Speak → Submit → Response)</td></tr>
+      <tr><td>10</td><td>Wireframes / Mockups</td><td>Low-fi + hi-fi, all edge states</td></tr>
+      <tr><td>11</td><td>Acceptance Criteria</td><td>Given / When / Then format</td></tr>
+      <tr><td>12</td><td>Metrics & KPIs</td><td>DAU/MAU, Retention, Adoption, NPS</td></tr>
+      <tr><td>13</td><td>Analytics Events</td><td>Specific user actions to track</td></tr>
+      <tr><td>14</td><td>Dependencies</td><td>Teams, APIs, systems involved</td></tr>
+      <tr><td>15</td><td>Risks & Mitigations</td><td>Potential issues and how to handle them</td></tr>
+      <tr><td>16</td><td>Rollout Plan</td><td>Internal → Beta → 50% → 100%</td></tr>
+      <tr><td>17</td><td>SLA / SLO</td><td>Uptime target, latency targets, incident resolution</td></tr>
+    </table>
+    <div class="framework">PM Golden Formula:
+Problem → Users → Solution → Metrics → Launch → Learn → Iterate</div>
+  </div>
+</div>
+
+<!-- 20. Ideation -->
+<div class="section theme-indigo" id="s20">
+  <div class="section-header"><div class="section-num">20</div><h2>Ideation</h2></div>
+  <div class="section-body">
+    <div class="question">What is ideation in product management?</div>
+    <p>Ideation is generating, exploring, and refining ideas to solve a problem or create new opportunities — before deciding what to build.</p>
+    <h3>Common Ideation Techniques</h3>
+    <table>
+      <tr><th>Technique</th><th>Description</th></tr>
+      <tr><td>Brainstorming</td><td>Generate as many ideas as possible</td></tr>
+      <tr><td>Crazy 8s</td><td>Sketch 8 ideas in 8 minutes</td></tr>
+      <tr><td>Mind Mapping</td><td>Connect related concepts visually</td></tr>
+      <tr><td>SCAMPER</td><td>Substitute, Combine, Adapt, Modify, Put to use, Eliminate, Reverse</td></tr>
+      <tr><td>Design Thinking</td><td>Collaborate cross-functionally to empathize, define, ideate, prototype, test</td></tr>
+    </table>
+    <div class="interview-box"><div class="label">🎤 Interview Answer</div><p>"I start by understanding user pain points through research and data. I then facilitate brainstorming with design, engineering, and business teams to generate multiple solutions. I evaluate ideas using RICE or impact-vs-effort, prioritize the best options, and validate them through prototypes or experiments."</p></div>
+  </div>
+</div>
+
+<!-- 21. Market Research Obsession -->
+<div class="section theme-brown" id="s21">
+  <div class="section-header"><div class="section-num">21</div><h2>Why PMs Should Be Obsessed with Market Research & Metrics</h2></div>
+  <div class="section-body">
+    <div class="question">Why must a PM be obsessed with market research and metrics?</div>
+    <p>Without market research, a PM risks building products nobody wants. Without metrics, decisions are subjective guesses.</p>
+    <div class="formula">Market Research → Insights → Product Decisions → Metrics → Iteration → Growth</div>
+    <h3>PM Lifecycle: Data-Driven at Every Stage</h3>
+    <table>
+      <tr><th>Stage</th><th>Question</th><th>Tool</th></tr>
+      <tr><td>Discover</td><td>What problem should we solve?</td><td>Market research</td></tr>
+      <tr><td>Prioritize</td><td>Which feature matters most?</td><td>User data</td></tr>
+      <tr><td>Build</td><td>What should be in MVP?</td><td>Usage analytics</td></tr>
+      <tr><td>Launch</td><td>Is adoption happening?</td><td>KPIs</td></tr>
+      <tr><td>Improve</td><td>What should we iterate?</td><td>Retention metrics</td></tr>
+    </table>
+    <div class="tip">💡 "Data tells you what is happening. Market research tells you why it is happening. A great PM combines both."</div>
+  </div>
+</div>
+
+<!-- 22. Dealing with Failure -->
+<div class="section theme-cyan" id="s22">
+  <div class="section-header"><div class="section-num">22</div><h2>How to Deal with Failure as a PM</h2></div>
+  <div class="section-body">
+    <div class="question">How do you deal with failure as a PM?</div>
+    <p>Failure is inevitable in PM. A great PM fails fast, learns quickly, and improves continuously.</p>
+    <div class="framework">Framework: Failure → Analysis → Learning → Iteration → Growth</div>
+    <h3>Steps to Handle Failure</h3>
+    <ol>
+      <li><strong>Acknowledge</strong> — Accept the outcome objectively without blaming others</li>
+      <li><strong>Measure the Gap</strong> — Compare expected vs actual KPIs</li>
+      <li><strong>Root Cause Analysis</strong> — Use 5 Whys to find the real reason</li>
+      <li><strong>Gather Feedback</strong> — User interviews, surveys, support tickets, session recordings</li>
+      <li><strong>Iterate</strong> — Fix UI, change onboarding, reposition, or roll back</li>
+      <li><strong>Share Learnings</strong> — Communicate transparently with stakeholders</li>
+    </ol>
+    <div class="interview-box"><div class="label">🎤 Interview Answer</div><p>"I view failure as a learning opportunity. I assess impact using KPIs, conduct root cause analysis using data and customer feedback, prioritize corrective actions, iterate on the solution, and communicate transparently with stakeholders. My focus is on learning quickly and continuously improving the product."</p></div>
+  </div>
+</div>
+
+<!-- 23. Developer Selection -->
+<div class="section theme-dark" id="s23">
+  <div class="section-header"><div class="section-num">23</div><h2>How a PM Chooses the Right Developer for a Critical Task</h2></div>
+  <div class="section-body">
+    <div class="question">With 5 developers of similar experience, how does a PM choose one for a critical 1-week deadline?</div>
+    <p>Don't choose based on seniority alone. Choose based on the highest probability of successful delivery.</p>
+    <h3>Evaluation Framework (Score 1–5)</h3>
+    <table>
+      <tr><th>Criteria</th><th>Weight</th><th>Why It Matters</th></tr>
+      <tr><td>Domain/Module Knowledge</td><td>30%</td><td>Already understands the codebase</td></tr>
+      <tr><td>Past Delivery History</td><td>25%</td><td>Has delivered under tight deadlines</td></tr>
+      <tr><td>Code Quality</td><td>20%</td><td>Fewer bugs and less rework</td></tr>
+      <tr><td>Ownership / Accountability</td><td>15%</td><td>Works independently</td></tr>
+      <tr><td>Documentation Skills</td><td>10%</td><td>Maintains proper changelogs</td></tr>
+    </table>
+    <h3>Definition of Done</h3>
+    <div class="chips">
+      <span class="chip">✅ Code implemented</span>
+      <span class="chip">✅ Unit tests passed</span>
+      <span class="chip">✅ PR merged</span>
+      <span class="chip">✅ Documentation updated</span>
+      <span class="chip">✅ QA completed</span>
+      <span class="chip">✅ Release notes prepared</span>
+    </div>
+    <div class="tip">💡 Knowledge beats experience. Past behavior predicts future performance. Documentation is part of engineering quality.</div>
+  </div>
+</div>
+
+<!-- 24. Product Assets -->
+<div class="section theme-wine" id="s24">
+  <div class="section-header"><div class="section-num">24</div><h2>Product Assets Every PM Should Know</h2></div>
+  <div class="section-body">
+    <div class="question">What are the key product assets and what is each one used for?</div>
+    <table>
+      <tr><th>Asset</th><th>Purpose</th><th>Audience</th></tr>
+      <tr><td>Product Datasheet</td><td>1–2 page product summary (features, specs, pricing)</td><td>Customers, Sales, Partners</td></tr>
+      <tr><td>White Paper</td><td>In-depth problem + solution document, builds credibility</td><td>Enterprise buyers, Decision makers</td></tr>
+      <tr><td>Solution Brief</td><td>Shows how the product solves a specific customer problem</td><td>Sales, Executives</td></tr>
+      <tr><td>Product Demo</td><td>Shows the product in action; answers what/how/why</td><td>Prospects, Investors, Internal</td></tr>
+      <tr><td>Case Study</td><td>Detailed customer success story with measurable ROI</td><td>Prospects, Sales</td></tr>
+      <tr><td>Testimonials</td><td>Real customer quotes about positive experiences</td><td>Marketing, Website</td></tr>
+      <tr><td>Sales Deck</td><td>Presentation for customer meetings (overview, pricing, next steps)</td><td>Customers</td></tr>
+      <tr><td>ROI Calculator</td><td>Shows the financial benefit of adopting the product</td><td>Enterprise buyers</td></tr>
+      <tr><td>Battle Card</td><td>Internal competitive comparison + objection handling guide</td><td>Sales team</td></tr>
+      <tr><td>Value Proposition</td><td>Concise statement: who, problem, how solved, why better</td><td>All</td></tr>
+      <tr><td>FAQ</td><td>Answers common questions (pricing, security, integrations)</td><td>Customers, Support</td></tr>
+      <tr><td>Pricing & Packaging Guide</td><td>Plans, add-ons, discounts, licensing models</td><td>Sales, Finance</td></tr>
+    </table>
+    <h3>Internal PM Assets</h3>
+    <div class="chips">
+      <span class="chip">Product Vision</span><span class="chip">Strategy Doc</span>
+      <span class="chip">Roadmap</span><span class="chip">PRD</span>
+      <span class="chip">User Stories</span><span class="chip">Acceptance Criteria</span>
+      <span class="chip">Architecture Diagrams</span><span class="chip">Sprint Backlog</span>
+      <span class="chip">Release Notes</span><span class="chip">KPI Dashboard</span>
+      <span class="chip">A/B Test Results</span><span class="chip">Postmortem Reports</span>
+    </div>
+  </div>
+</div>
+
+<!-- 25. Key PM Terms -->
+<div class="section theme-blue" id="s25">
+  <div class="section-header"><div class="section-num">25</div><h2>Key PM Terms Quick Reference</h2></div>
+  <div class="section-body">
+    <div class="question">What are the most commonly used words and terms in product management?</div>
+    <table>
+      <tr><th>Term</th><th>Quick Definition</th></tr>
+      <tr><td>Paradigm Shift</td><td>Fundamental change in how something is understood or approached</td></tr>
+      <tr><td>SLA</td><td>Service Level Agreement — formal promise of uptime, response time, resolution time</td></tr>
+      <tr><td>SLO</td><td>Service Level Objective — internal target (e.g. 99.95% uptime)</td></tr>
+      <tr><td>SLI</td><td>Service Level Indicator — actual measured value (e.g. actual uptime this month)</td></tr>
+      <tr><td>PRD</td><td>Product Requirements Document — defines what to build and why</td></tr>
+      <tr><td>GTM Strategy</td><td>Go-to-Market strategy — plan for launching to the right audience</td></tr>
+      <tr><td>Wireframe (Lo-fi)</td><td>Simple black-and-white layout sketches for early feedback</td></tr>
+      <tr><td>Wireframe (Hi-fi)</td><td>Polished design with real colors, fonts, interactions</td></tr>
+      <tr><td>Scrum</td><td>Agile framework with sprints, stand-ups, retrospectives, PO, SM</td></tr>
+      <tr><td>SDLC</td><td>Software Development Life Cycle: Requirements → Design → Code → Test → Deploy → Maintain</td></tr>
+      <tr><td>SQL (data)</td><td>Structured Query Language — manages relational databases</td></tr>
+      <tr><td>TCP</td><td>Transmission Control Protocol — reliable, ordered internet data transfer</td></tr>
+      <tr><td>DNS</td><td>Domain Name System — translates domain names to IP addresses</td></tr>
+      <tr><td>CDN</td><td>Content Delivery Network — caches content near users for speed</td></tr>
+      <tr><td>Load Balancer</td><td>Distributes traffic across servers to prevent overload</td></tr>
+      <tr><td>NPS</td><td>Net Promoter Score — likelihood customers recommend your product</td></tr>
+      <tr><td>CSAT</td><td>Customer Satisfaction Score — direct satisfaction rating</td></tr>
+      <tr><td>CAC</td><td>Customer Acquisition Cost — cost to acquire one new customer</td></tr>
+      <tr><td>LTV / CLV</td><td>Lifetime Value — total revenue a customer generates over their lifetime</td></tr>
+      <tr><td>DAU / MAU</td><td>Daily / Monthly Active Users</td></tr>
+      <tr><td>Churn Rate</td><td>% of customers who stop using the product in a period</td></tr>
+      <tr><td>TAM / SAM / SOM</td><td>Total / Serviceable / Obtainable Market size estimates</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- Footer -->
+<div style="text-align:center; padding: 40px 0 20px; color: #aaa; font-size: 13px; border-top: 1px solid #e8eaf0; margin-top: 20px;">
+  Product Management Knowledge Base &nbsp;·&nbsp; For learning and interview preparation
+</div>
+
+</div><!-- /main -->
+</body>
+</html>
